@@ -1,48 +1,54 @@
-#feedflow {
-    width: 100%;
-    height: 500px;
-    background-color: #8a8a8a;
-    padding : 0;
-    margin : 0;
+body {
+    margin: 0;
 }
 
-.tabbar {
+#statusBar {
+    width: 100%;
     height: 50px;
+    background-color: #8D7EE0;
+}
+
+#feedFlow {
+    width: 100%;
+    background-color: #8a8a8a;
+}
+
+#tabbar {
     width: 100%;
     position: absolute;
     bottom: 0;
     left: 0;
 }
 
-.tabbar ul {
+#tabbar ul {
     height: 100%;
     list-style: none;
     padding: 0;
     margin: 0;
 }
 
-.tabbar ul li {
+#tabbar ul li {
     width: 20%;
     height: 100px;
     float: left;
 }
 
-#feedbutton {
+#feedButton {
     background-color: #81F781;
 }
 
-#friendsbutton {
+#friendsButton {
     background-color: #0080FF;
 }
 
-#composebutton {
+#composeButton {
     background-color: #FA58D0;
 }
 
-#notificationbutton {
+#notificationButton {
     background-color: #faf964;
 }
 
-#morebutton {
+#moreButton {
     background-color: #fa4049;
 }
