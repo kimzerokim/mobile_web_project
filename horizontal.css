@@ -1,13 +1,51 @@
-#feedflow {
-    width: 100%;
-    height: 500px;
+body {
+    margin : 0px;
+}
+#header {
+    width : 100%;
+    height : 150px;
     background-color: #8a8a8a;
-    padding : 0;
-    margin : 0;
+}
+
+#feedflow {
+    width: auto;
+    height: 300px;
+}
+
+#feedflow ul {
+    background-color: #4169E1;
+    width : 1310px;
+    height: 100%;
+    padding: 0px;   
+    margin: 0px;
+    list-style : none;
+}
+.threadContainer {
+    margin-left: 10px;
+    margin-right: 10px;
+    float : left;
+    height: 100%;
+    width : 240px;
+}
+
+.red {
+    background-color: red;
+}
+.orange {
+    background-color: orange;
+}
+.yellow {
+    background-color: yellow;
+}
+.green {
+    background-color: green;
+}
+.blue {
+    background-color: blue;
 }
 
 .tabbar {
-    height: 50px;
+    height: 65px;
     width: 100%;
     position: absolute;
     bottom: 0;
@@ -23,7 +61,7 @@
 
 .tabbar ul li {
     width: 20%;
-    height: 100px;
+    height: 100%;
     float: left;
 }
 
