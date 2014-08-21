@@ -1,21 +1,30 @@
+#feedflow {
+    width: 100%;
+    height: 500px;
+    background-color: #8a8a8a;
+    padding : 0;
+    margin : 0;
+}
+
 .tabbar {
-    position: absolute;
-    bottom: 0;
     height: 50px;
     width: 100%;
+    position: absolute;
+    bottom: 0;
     left: 0;
 }
 
 .tabbar ul {
+    height: 100%;
+    list-style: none;
+    padding: 0;
+    margin: 0;
 }
 
-.tabbar li {
-    float: left;
-    display: inline;
-}
-
-.tabbar div {
+.tabbar ul li {
     width: 20%;
+    height: 100px;
+    float: left;
 }
 
 #feedbutton {
@@ -30,6 +39,10 @@
     background-color: #FA58D0;
 }
 
-#feedflow {
+#notificationbutton {
+    background-color: #faf964;
+}
 
+#morebutton {
+    background-color: #fa4049;
 }
