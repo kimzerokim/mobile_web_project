@@ -1,0 +1,35 @@
+.tabbar {
+    position: absolute;
+    bottom: 0;
+    height: 50px;
+    width: 100%;
+    left: 0;
+}
+
+.tabbar ul {
+}
+
+.tabbar li {
+    float: left;
+    display: inline;
+}
+
+.tabbar div {
+    width: 20%;
+}
+
+#feedbutton {
+    background-color: #81F781;
+}
+
+#friendsbutton {
+    background-color: #0080FF;
+}
+
+#composebutton {
+    background-color: #FA58D0;
+}
+
+#feedflow {
+
+}
