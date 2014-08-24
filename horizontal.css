@@ -10,11 +10,9 @@ body {
 #feedFlow {
     width: auto;
     height: 300px;
-    background-color: #8a8a8a;
 }
 
 #feedFlow ul {
-    background-color: #4169E1;
     width: 1410px;
     height: 300px;
     padding: 0;
@@ -27,45 +25,37 @@ body {
     float: left;
     height: 100%;
     width: 240px;
-    -webkit-border-radius: 8px;
-    border-radius: 8px;
+    -webkit-border-radius: 2px;
+    border-radius: 2px;
 }
 
 .threadPhoto {
-    height: 240px;
-    width: 240px;
-    background-color: #40e16d;
-    -webkit-border-radius: 8px 8px 0 0;
-    border-radius: 8px 8px 0 0;
+    width: 100%;
+    background-color: #3d3e3d;
+    -webkit-border-radius: 2px 2px 0 0;
+    border-radius: 2px 2px 0 0;
 }
 
 .threadInfo {
-    height: 60px;
-    width: 240px;
-    -webkit-border-radius: 0 0 8px 8px;
-    border-radius: 0 0 8px 8px;
+    width: 100%;
+    -webkit-border-radius: 0 0 2px 2px;
+    border-radius: 0 0 2px 2px;
+    background-color: #8a8a8a;
 }
 
 #card1 {
-    margin-left: 40px;
-    background-color: red;
 }
 
 #card2 {
-    background-color: orange;
 }
 
 #card3 {
-    background-color: yellow;
 }
 
 #card4 {
-    background-color: green;
 }
 
 #card5 {
-    margin-right: 40px;
-    background-color: blue;
 }
 
 #statusBar {
