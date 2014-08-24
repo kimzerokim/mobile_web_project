@@ -4,7 +4,7 @@
     function layoutFitting() {
         var statusBar = document.getElementById('statusBar'),
             feedField = document.getElementById('feedFlow'),
-            tabBar = document.getElementById('tabbar');
+            tabBar = document.getElementById('tabBar');
 
         statusBar.style.height = '44px';
         tabBar.style.height = '50px';
