@@ -1,86 +1,72 @@
 body {
-    margin : 0px;
-}
-#header {
-    width : 100%;
-    height : 150px;
-    background-color: #8a8a8a;
+    margin: 0;
 }
 
 #feedflow {
     width: auto;
     height: 300px;
+    background-color: #8a8a8a;
 }
 
 #feedflow ul {
     background-color: #4169E1;
-    width : 1310px;
+    width: 1310px;
     height: 100%;
-    padding: 0px;   
-    margin: 0px;
-    list-style : none;
+    padding: 0;
+    margin: 0;
+    list-style: none;
 }
+
 .threadContainer {
     margin-left: 10px;
     margin-right: 10px;
-    float : left;
+    float: left;
     height: 100%;
-    width : 240px;
+    width: 240px;
 }
 
-.red {
-    background-color: red;
-}
-.orange {
-    background-color: orange;
-}
-.yellow {
-    background-color: yellow;
-}
-.green {
-    background-color: green;
-}
-.blue {
-    background-color: blue;
+#statusBar {
+    width: 100%;
+    height: 50px;
+    background-color: #8D7EE0;
 }
 
-.tabbar {
-    height: 65px;
+#tabbar {
     width: 100%;
     position: absolute;
     bottom: 0;
     left: 0;
 }
 
-.tabbar ul {
+#tabbar ul {
     height: 100%;
     list-style: none;
     padding: 0;
     margin: 0;
 }
 
-.tabbar ul li {
+#tabbar ul li {
     width: 20%;
     height: 100%;
     float: left;
 }
 
-#feedbutton {
+#feedButton {
     background-color: #81F781;
 }
 
-#friendsbutton {
+#friendsButton {
     background-color: #0080FF;
 }
 
-#composebutton {
+#composeButton {
     background-color: #FA58D0;
 }
 
-#notificationbutton {
+#notificationButton {
     background-color: #faf964;
 }
 
-#morebutton {
+#moreButton {
     background-color: #fa4049;
 }
