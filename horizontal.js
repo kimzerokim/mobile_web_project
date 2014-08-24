@@ -6,7 +6,7 @@
             feedField = document.getElementById('feedFlow'),
             tabBar = document.getElementById('tabbar');
 
-        statusBar.style.height = '64px';
+        statusBar.style.height = '44px';
         tabBar.style.height = '50px';
         feedField.style.height = (screenHeight-parseInt(tabBar.style.height, 10)
             - parseInt(statusBar.style.height, 10)) + 'px';

@@ -29,7 +29,7 @@ body {
 
 #tabbar ul li {
     width: 20%;
-    height: 100px;
+    height:100%;
     float: left;
 }
 
