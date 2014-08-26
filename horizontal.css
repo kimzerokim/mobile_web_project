@@ -1,71 +1,47 @@
-body {
-    margin: 0;
+
+body{
+	margin: 0px;
 }
 
 #header {
+    height: 150px;
     width: 100%;
-    height: 90px;
 }
 
-#feedFlow {
-    width: auto;
-    height: 300px;
+#feedFlow{
+	width : 100%;
+	overflow: hidden;
 }
-
-#feedFlow ul {
-    width: 1410px;
-    height: 300px;
-    padding: 0;
-    margin: 0;
-    list-style: none;
+#feedFlow ul{
+	height: 100%;
+	list-style:none;
+	padding: 0px;	
+	margin: 0px;
+	position: relative;
 }
-
-.threadContainer {
-    margin-right: 20px;
-    float: left;
-    height: 100%;
-    width: 240px;
-    -webkit-border-radius: 2px;
-    border-radius: 2px;
+#feedFlow ul li{
+	float: left;
+	height: 300px;	
 }
-
-.threadPhoto {
-    width: 100%;
-    background-color: #3d3e3d;
-    -webkit-border-radius: 2px 2px 0 0;
-    border-radius: 2px 2px 0 0;
+#red{
+	background-color: red;
 }
-
-.threadInfo {
-    width: 100%;
-    -webkit-border-radius: 0 0 2px 2px;
-    border-radius: 0 0 2px 2px;
-    background-color: #8a8a8a;
+#orange{
+	background-color: orange;
 }
-
-#card1 {
+#yellow{
+	background-color: yellow;
 }
-
-#card2 {
+#green{
+	background-color: green;
 }
-
-#card3 {
-}
-
-#card4 {
-}
-
-#card5 {
-}
-
-#statusBar {
-    width: 100%;
-    height: 50px;
-    background-color: #8D7EE0;
+#blue{
+	background-color: blue;
 }
 
 #tabBar {
     width: 100%;
+    height : 50px;
     position: absolute;
     bottom: 0;
     left: 0;
@@ -83,6 +59,38 @@ body {
     height: 100%;
     float: left;
 }
+
+.threadContainer {
+    float: left;
+    height: 100%;
+    width: 240px;
+    -webkit-border-radius: 2px;
+    border-radius: 2px;
+}
+
+.threadWrapper {
+	margin-left: 10px;
+	margin-right: 10px;
+	height: 300px;
+	width: auto;
+}
+
+.threadPhoto {
+	width : 100%;
+	height: 260px;
+    background-color: #3d3e3d;
+    -webkit-border-radius: 2px 2px 0 0;
+    border-radius: 2px 2px 0 0;
+}
+
+.threadInfo {
+    width: 100%;
+    height : 40px;
+    -webkit-border-radius: 0 0 2px 2px;
+    border-radius: 0 0 2px 2px;
+    background-color: #8a8a8a;
+}
+
 
 #feedButton {
     background-color: #81F781;

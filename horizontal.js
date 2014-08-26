@@ -51,3 +51,77 @@ function onDeviceReady() {
 }
 
 document.addEventListener('deviceready', onDeviceReady, false);
+
+var Flicking = {
+	"init" : function(){
+		this.index = 0;
+		this.width = window.innerWidth;
+		this.halfWidth = this.width/2;
+		this.currentLeft = 0;
+		this.touchStartX = 0;
+		this.drag_dist = 0;
+		this.container = document.querySelector("#feedFlow ul");
+		this.fittingContent(this.width, 300);
+		this.eventBind();
+	},
+	"fittingContent" : function(width,height){
+		var style = document.createElement('style');
+		style.type = 'text/css';
+		
+		var str = '#parent { height: '+height+'px; }'+
+				  '#parent ul { width: '+(width*5)+'px; }'+
+				  '#parent ul li { width: '+width+'px; }';
+		style.innerHTML = str;
+		document.getElementsByTagName('head')[0].appendChild(style);
+	},
+	"eventBind":function(){
+		//touch, requestAnimationFrame
+		this.container.addEventListener("touchstart",this.touchstart.bind(this));
+		this.container.addEventListener("touchmove",this.touchmove.bind(this));
+		this.container.addEventListener("touchend",this.touchend.bind(this));
+	},
+	"touchstart" : function(e){
+		touchStartX = e.touches[0].pageX
+		this.container.style.left = this.currentLeft + 'px'
+		this.container.style.transition = ''
+		this.container.style.transform = ''
+	},
+	"touchmove" : function(e){
+		e.preventDefault()
+		this.drag_dist = e.changedTouches[0].pageX - touchStartX
+		this.container.style.left = this.currentLeft + this.drag_dist + 'px'	
+	},
+	"touchend" : function(e){
+		var leftString = this.container.style.left
+		var leftValue = parseInt(leftString.substring(0, leftString.length-2))
+		this.currentLeft = leftValue
+		if (Math.abs(this.drag_dist) > this.halfWidth) {
+			if (this.drag_dist < 0) {
+				//console.log('next page to the right')
+				this.index++
+				var finalLeft = -(this.index)*(this.width)
+				this.animate(-(this.width+this.drag_dist))
+				this.currentLeft = finalLeft
+			} else {
+				//console.log('next page to the left')
+				this.index--;
+				var finalLeft = -(this.index)*(this.width);
+				this.animate(this.width-this.drag_dist);
+				this.currentLeft = finalLeft;
+			}
+		} else {
+			//console.log('go back')
+			var finalLeft = -(this.index)*(this.width)
+			this.currentLeft = finalLeft
+			this.animate(-this.drag_dist)
+		}
+		this.touchStartX = 0;
+		this.drag_dist = 0;
+	},
+	"animate" : function(distance){
+		this.container.style.transition = 'transform 0.3s ease-in-out'
+		this.container.style.transform = 'translate3d(' + distance + 'px, 0, 0)'
+	}
+};
+
+Flicking.init();
