@@ -12,8 +12,8 @@
         statusBar.style.height = '0px';
         header.style.height = (screenHeight / 3.8) + 'px';
         tabBar.style.height = (screenHeight / 9.2) + 'px';
-        feedField.style.height = (screenHeight - parseInt(statusBar.style.height, 10) - parseInt(header.style.height, 10)
-            - parseInt(tabBar.style.height, 10) ) + 'px';
+        feedField.style.height = (screenHeight - parseFloat(statusBar.style.height) - parseFloat(header.style.height)
+            - parseFloat(tabBar.style.height) ) + 'px';
     }
 
     function threadFitting() {
@@ -30,23 +30,23 @@
 
             container.style.width = (screenWidth / 1.3) + 'px';
             container.style.height = (screenWidth / 1.1) + 'px';
-            photoField.style.height = (parseInt(container.style.width, 10)) + 'px';
-            infoField.style.height = (parseInt(container.style.height, 10)
-                - parseInt(photoField.style.height, 10)) + 'px';
+            photoField.style.height = (parseFloat(container.style.width)) + 'px';
+            infoField.style.height = (parseFloat(container.style.height)
+                - parseFloat(photoField.style.height)) + 'px';
             container.style.marginRight = (screenWidth / 35) + 'px';
         }
     }
 
     function initPosition() {
         var threadFlow = document.querySelector('#feedFlow ul'),
-            representContainer = document.getElementById('card1');
+            threadContainer = document.getElementById('card1');
 
-        var threadWidth = (parseInt(representContainer.style.width) +
-            parseInt(representContainer.style.marginRight));
+        var threadWidth = (parseFloat(threadContainer.style.width) +
+                parseFloat(threadContainer.style.marginRight)),
+            leftMargin = (screenWidth - threadWidth - parseFloat(threadContainer.style.marginRight)) / 2;
 
-        var leftMargin = (screenWidth - threadWidth - parseInt(representContainer.style.marginRight)) / 2;
-
-        threadFlow.style.left = (-2 * threadWidth + leftMargin + parseInt(representContainer.style.marginRight)) + 'px';
+        threadFlow.style.left = (-2 * threadWidth + leftMargin + parseFloat(threadContainer.style.marginRight)) + 'px';
+        //threadFlow.style.left = (-2 * threadWidth + parseFloat(threadContainer.style.marginRight)) + 'px';
     }
 
     layoutFitting();
@@ -58,11 +58,14 @@ var Flicking = {
     "init": function () {
         this.index = 0;
         this.width = window.innerWidth;
+        this.container = document.querySelector("#feedFlow ul");
+        this.threadWidth = parseFloat(document.getElementById('card1').style.width) +
+            parseFloat(document.getElementById('card1').style.marginRight);
         this.halfWidth = this.width / 2;
-        this.currentLeft = 0;
+        this.currentLeft = parseFloat(this.container.style.left);
+        this.finalLeft = parseFloat(this.container.style.left);
         this.touchStartX = 0;
         this.drag_dist = 0;
-        this.container = document.querySelector("#feedFlow ul");
         this.eventBind();
     },
     "eventBind": function () {
@@ -72,41 +75,32 @@ var Flicking = {
         this.container.addEventListener("touchend", this.touchend.bind(this));
     },
     "touchstart": function (e) {
-        touchStartX = e.touches[0].pageX
-        this.container.style.left = this.currentLeft + 'px'
-        this.container.style.transition = ''
-        this.container.style.transform = ''
+        this.touchStartX = e.touches[0].pageX;
+        this.container.style.left = this.finalLeft + 'px';
+        this.container.style.transition = '';
+        this.container.style.transform = 'translate3d(0, 0, 0)';
     },
     "touchmove": function (e) {
-        e.preventDefault()
-        this.drag_dist = e.changedTouches[0].pageX - touchStartX
-        this.container.style.left = this.currentLeft + this.drag_dist + 'px'
+        e.preventDefault();
+        this.drag_dist = e.changedTouches[0].pageX - this.touchStartX;
+        this.container.style.left = this.finalLeft + this.drag_dist + 'px';
     },
     "touchend": function (e) {
-        var leftString = this.container.style.left
-        var leftValue = parseInt(leftString.substring(0, leftString.length - 2))
-        this.currentLeft = leftValue
-        if (Math.abs(this.drag_dist) > this.halfWidth) {
+        if (Math.abs(this.drag_dist) > this.halfWidth * 0.5) {
             if (this.drag_dist < 0) {
                 //console.log('next page to the right')
-                SwapCard('left');
-                this.index++
-                var finalLeft = -(this.index) * (this.width)
-                this.animate(-(this.width + this.drag_dist))
-                this.currentLeft = finalLeft
+                //SwapCard('left');
+                this.animate(-(this.threadWidth + this.drag_dist));
+                this.finalLeft = this.finalLeft - this.threadWidth;
             } else {
                 //console.log('next page to the left')
-                SwapCard('right');
-                this.index--;
-                var finalLeft = -(this.index) * (this.width);
-                this.animate(this.width - this.drag_dist);
-                this.currentLeft = finalLeft;
+                //SwapCard('right');
+                this.animate(this.threadWidth - this.drag_dist);
+                this.finalLeft = this.finalLeft + this.threadWidth;
             }
         } else {
             //console.log('go back')
-            var finalLeft = -(this.index) * (this.width)
-            this.currentLeft = finalLeft
-            this.animate(-this.drag_dist)
+            this.animate(-this.drag_dist);
         }
         this.touchStartX = 0;
         this.drag_dist = 0;
@@ -124,9 +118,13 @@ var SwapCard = function (direction) {
         firstElement = threadFlow.firstChild.nextSibling,
         lastElement = threadFlow.lastChild.previousSibling;
 
+    console.log(firstElement);
+    console.log(lastElement);
+
     if (direction === 'left') {
-        var dupnode = firstElement.cloneNode(true);
-        threadFlow.appendChild(dupnode);
+//        var dupnode = firstElement.cloneNode(true);
+//        threadFlow.appendChild(dupnode);
+        threadFlow.appendChild(firstElement);
     } else if (direction === 'right') {
         threadFlow.insertBefore(lastElement, threadFlow.childNodes[1]);
     }
