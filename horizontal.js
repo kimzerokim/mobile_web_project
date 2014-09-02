@@ -56,13 +56,11 @@
 
 var Flicking = {
     "init": function () {
-        this.index = 0;
         this.width = window.innerWidth;
         this.container = document.querySelector("#feedFlow ul");
         this.threadWidth = parseFloat(document.getElementById('card1').style.width) +
             parseFloat(document.getElementById('card1').style.marginRight);
         this.halfWidth = this.width / 2;
-        this.currentLeft = parseFloat(this.container.style.left);
         this.finalLeft = parseFloat(this.container.style.left);
         this.touchStartX = 0;
         this.drag_dist = 0;
@@ -75,6 +73,7 @@ var Flicking = {
         this.container.addEventListener("touchend", this.touchend.bind(this));
     },
     "touchstart": function (e) {
+        console.log(this.finalLeft);
         this.touchStartX = e.touches[0].pageX;
         this.container.style.left = this.finalLeft + 'px';
         this.container.style.transition = '';
@@ -88,15 +87,13 @@ var Flicking = {
     "touchend": function (e) {
         if (Math.abs(this.drag_dist) > this.halfWidth * 0.5) {
             if (this.drag_dist < 0) {
-                //console.log('next page to the right')
-                //SwapCard('left');
+                //left
                 this.animate(-(this.threadWidth + this.drag_dist));
-                this.finalLeft = this.finalLeft - this.threadWidth;
+                this.swapCard('left');
             } else {
-                //console.log('next page to the left')
-                //SwapCard('right');
+                //right
                 this.animate(this.threadWidth - this.drag_dist);
-                this.finalLeft = this.finalLeft + this.threadWidth;
+                this.swapCard('right');
             }
         } else {
             //console.log('go back')
@@ -106,26 +103,27 @@ var Flicking = {
         this.drag_dist = 0;
     },
     "animate": function (distance) {
-        this.container.style.transition = 'transform 0.3s ease-in-out'
-        this.container.style.transform = 'translate3d(' + distance + 'px, 0, 0)'
+        this.container.style.transition = 'transform 0.3s ease-in-out';
+        this.container.style.transform = 'translate3d(' + distance + 'px, 0, 0)';
+    },
+    "swapCard": function (direction) {
+        var threadFlowLeft = parseFloat(this.container.style.left),
+            threadList = document.getElementsByClassName('threadContainer'),
+            firstElement = threadList[0],
+            lastElement = threadList[4];
+
+        if (direction === 'left') {
+            var duplicateNode = firstElement.cloneNode(true);
+            this.container.appendChild(duplicateNode);
+            this.container.style.left = (threadFlowLeft + this.threadWidth) + 'px';
+            this.container.removeChild(firstElement);
+        } else if (direction === 'right') {
+            var duplicateNode = lastElement.cloneNode(true);
+            this.container.insertBefore(duplicateNode, firstElement);
+            this.container.style.left = (threadFlowLeft - this.threadWidth) + 'px';
+            this.container.removeChild(lastElement);
+        }
     }
 };
 
 Flicking.init();
-
-var SwapCard = function (direction) {
-    var threadFlow = document.querySelector('#feedFlow ul'),
-        firstElement = threadFlow.firstChild.nextSibling,
-        lastElement = threadFlow.lastChild.previousSibling;
-
-    console.log(firstElement);
-    console.log(lastElement);
-
-    if (direction === 'left') {
-//        var dupnode = firstElement.cloneNode(true);
-//        threadFlow.appendChild(dupnode);
-        threadFlow.appendChild(firstElement);
-    } else if (direction === 'right') {
-        threadFlow.insertBefore(lastElement, threadFlow.childNodes[1]);
-    }
-};
