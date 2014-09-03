@@ -46,7 +46,6 @@
             leftMargin = (screenWidth - threadWidth - parseFloat(threadContainer.style.marginRight)) / 2;
 
         threadFlow.style.left = (-2 * threadWidth + leftMargin + parseFloat(threadContainer.style.marginRight)) + 'px';
-        //threadFlow.style.left = (-2 * threadWidth + parseFloat(threadContainer.style.marginRight)) + 'px';
     }
 
     layoutFitting();
@@ -55,7 +54,7 @@
 })();
 
 var Flicking = {
-    "init": function () {
+    init: function () {
         this.width = window.innerWidth;
         this.container = document.querySelector("#feedFlow ul");
         this.threadWidth = parseFloat(document.getElementById('card1').style.width) +
@@ -63,50 +62,87 @@ var Flicking = {
         this.halfWidth = this.width / 2;
         this.finalLeft = parseFloat(this.container.style.left);
         this.touchStartX = 0;
-        this.drag_dist = 0;
+        this.touchStartY = 0;
+        this.dragX = 0;
+        this.dragY = 0;
+        this.sideDrag = false;
+        this.upDrag = false;
         this.eventBind();
     },
-    "eventBind": function () {
+    eventBind: function () {
         //touch, requestAnimationFrame
-        this.container.addEventListener("touchstart", this.touchstart.bind(this));
-        this.container.addEventListener("touchmove", this.touchmove.bind(this));
-        this.container.addEventListener("touchend", this.touchend.bind(this));
+        this.container.addEventListener("touchstart", this.touchStart.bind(this));
+        this.container.addEventListener("touchmove", this.touchMove.bind(this));
+        this.container.addEventListener("touchend", this.touchEnd.bind(this));
     },
-    "touchstart": function (e) {
-        console.log(this.finalLeft);
+    touchStart: function (e) {
         this.touchStartX = e.touches[0].pageX;
+        this.touchStartY = e.touches[0].pageY;
         this.container.style.left = this.finalLeft + 'px';
-        this.container.style.transition = '';
-        this.container.style.transform = 'translate3d(0, 0, 0)';
+//        this.container.style.transition = '';
+//        this.container.style.transform = 'translate3d(0, 0, 0)';
+        this.container.style.webkitTransition = '';
+        this.container.style.webkitTransform = 'translate3d(0, 0, 0)';
     },
-    "touchmove": function (e) {
+    touchMove: function (e) {
         e.preventDefault();
-        this.drag_dist = e.changedTouches[0].pageX - this.touchStartX;
-        this.container.style.left = this.finalLeft + this.drag_dist + 'px';
+        this.dragX = e.changedTouches[0].pageX - this.touchStartX;
+        this.dragY = e.changedTouches[0].pageY - this.touchStartY;
+        this.detectDirection(this.dragX, this.dragY);
     },
-    "touchend": function (e) {
-        if (Math.abs(this.drag_dist) > this.halfWidth * 0.5) {
-            if (this.drag_dist < 0) {
-                //left
-                this.animate(-(this.threadWidth + this.drag_dist));
-                this.swapCard('left');
-            } else {
-                //right
-                this.animate(this.threadWidth - this.drag_dist);
-                this.swapCard('right');
-            }
+    detectDirection: function (x, y) {
+        var upSlope = Math.abs(window.innerHeight / (window.innerWidth / 2)),
+            sideSlope = Math.abs((window.innerHeight / 2) / window.innerWidth),
+            userSlope = Math.abs(y / x),
+            distance = Math.sqrt(x * x + y * y);
+
+        if (distance > 10 && userSlope >= upSlope) {
+            this.upDrag = true;
+        } else if (sideSlope >= userSlope) {
+            this.sideDrag = true;
+            this.container.style.left = this.finalLeft + this.dragX + 'px';
         } else {
-            //console.log('go back')
-            this.animate(-this.drag_dist);
+            this.upDrag = false;
+            this.sideDrag = false;
+        }
+    },
+    touchEnd: function (e) {
+        var touchElement = e.changedTouches[0].target.parentNode;
+        if (touchElement === document.getElementById('feedFlow')) {
+            touchElement = null;
+        }
+        if (this.upDrag === true && touchElement != null) {
+            this.deleteCard(touchElement);
+        } else if (this.sideDrag === true) {
+            if (Math.abs(this.dragX) > this.halfWidth * 0.5) {
+                if (this.dragX < 0) {
+                    //left
+                    this.animate(-(this.threadWidth + this.dragX));
+                    this.swapCard('left');
+                } else {
+                    //right
+                    this.animate(this.threadWidth - this.dragX);
+                    this.swapCard('right');
+                }
+            } else {
+                //console.log('go back')
+                this.animate(-this.dragX);
+            }
         }
         this.touchStartX = 0;
-        this.drag_dist = 0;
+        this.touchStartY = 0;
+        this.dragX = 0;
+        this.dragY = 0;
+        this.upDrag = false;
+        this.sideDrag = false;
     },
-    "animate": function (distance) {
-        this.container.style.transition = 'transform 0.3s ease-in-out';
-        this.container.style.transform = 'translate3d(' + distance + 'px, 0, 0)';
+    animate: function (distance) {
+//        this.container.style.transition = 'transform 0.3s ease-in-out';
+//        this.container.style.transform = 'translate3d(' + distance + 'px, 0, 0)';
+        this.container.style.webkitTransition = '-webkit-transform 0.3s ease-in-out';
+        this.container.style.webkitTransform = 'translate3d(' + distance + 'px, 0, 0)';
     },
-    "swapCard": function (direction) {
+    swapCard: function (direction) {
         var threadFlowLeft = parseFloat(this.container.style.left),
             threadList = document.getElementsByClassName('threadContainer'),
             firstElement = threadList[0],
@@ -123,6 +159,12 @@ var Flicking = {
             this.container.style.left = (threadFlowLeft - this.threadWidth) + 'px';
             this.container.removeChild(lastElement);
         }
+    },
+    deleteCard: function (touchElement) {
+        var duplicateNode = touchElement.cloneNode(true);
+        //var deleteNextElement = touchElement.nextSibling.nextSibling;
+        this.container.removeChild(touchElement);
+        this.container.appendChild(duplicateNode);
     }
 };
 
