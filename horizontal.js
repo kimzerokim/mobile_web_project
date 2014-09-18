@@ -172,7 +172,7 @@ var Flicking = {
             this.container.style.left = (threadFlowLeft + this.threadWidth) + 'px';
             this.container.removeChild(firstElement);
         } else if (direction === 'right') {
-            var duplicateNode = firstElement.cloneNode(true);
+            var duplicateNode = lastElement.cloneNode(true);
             this.initThread(duplicateNode);
 
             this.container.insertBefore(duplicateNode, firstElement);
