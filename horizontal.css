@@ -1,6 +1,6 @@
 
 body {
-    margin: 0px;
+    margin: 0;
 }
 
 #header {
@@ -10,14 +10,13 @@ body {
 
 #feedFlow {
     width: 100%;
-    overflow: hidden;
 }
 
 #feedFlow ul {
     height: 100%;
     list-style: none;
-    padding: 0px;
-    margin: 0px;
+    padding: 0;
+    margin: 0;
     position: relative;
 }
 
@@ -70,7 +69,14 @@ body {
     height: 40px;
     -webkit-border-radius: 0 0 2px 2px;
     border-radius: 0 0 2px 2px;
-    background-color: #8a8a8a;
+    background-color: #dadada;
+}
+
+.threadInfo .moreButton {
+    height: 92%;
+    float : right;
+    margin-right: 6px;
+    margin-top : 2px;
 }
 
 #feedButton {
