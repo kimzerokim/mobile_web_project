@@ -125,7 +125,7 @@ var Flicking = {
         }
     },
     touchEnd: function (e) {
-        var touchElement = e.changedTouches[0].target.parentNode;
+        var touchElement = e.changedTouches[0].target.parentNode.parentNode;
         if (touchElement === document.getElementById('feedFlow')) {
             touchElement = null;
         }
@@ -166,20 +166,34 @@ var Flicking = {
 
         if (direction === 'left') {
             var duplicateNode = firstElement.cloneNode(true);
+            this.initThread(duplicateNode);
+
             this.container.appendChild(duplicateNode);
             this.container.style.left = (threadFlowLeft + this.threadWidth) + 'px';
             this.container.removeChild(firstElement);
         } else if (direction === 'right') {
-            var duplicateNode = lastElement.cloneNode(true);
+            var duplicateNode = firstElement.cloneNode(true);
+            this.initThread(duplicateNode);
+
             this.container.insertBefore(duplicateNode, firstElement);
             this.container.style.left = (threadFlowLeft - this.threadWidth) + 'px';
             this.container.removeChild(lastElement);
         }
     },
-    deleteCard: function (touchElement) {
-        var duplicateNode = touchElement.cloneNode(true);
-        this.container.removeChild(touchElement);
+    deleteCard: function (element) {
+        var duplicateNode = element.cloneNode(true);
+        this.initThread(duplicateNode);
+
+        this.container.removeChild(element);
         this.container.appendChild(duplicateNode);
+    },
+    initThread: function(node) {
+        var moreButton_front = node.childNodes[1].childNodes[3].childNodes[1],
+            moreButton_back = node.childNodes[3].childNodes[3].childNodes[1];
+
+        moreButton_front.addEventListener('click', Flicking.cardFlip.bind(Flicking));
+        moreButton_back.addEventListener('click', Flicking.cardReflip.bind(Flicking));
+        node.classList.remove('flipped');
     }
 };
 
