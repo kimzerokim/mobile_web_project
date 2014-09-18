@@ -1,11 +1,20 @@
 
 body {
     margin: 0;
+    background: -webkit-linear-gradient(#605784, #BBAFAF);
+    background: linear-gradient(#605784, #BBAFAF);
 }
 
 #header {
     height: 150px;
     width: 100%;
+}
+
+#header #logo {
+    height: 72%;
+    margin-top: 8%;
+    margin-left: 32%;
+    margin-right: auto;
 }
 
 #feedFlow {
@@ -18,40 +27,36 @@ body {
     padding: 0;
     margin: 0;
     position: relative;
-}
-
-#feedFlow ul li {
-    float: left;
-    height: 300px;
-}
-
-#tabBar {
-    width: 100%;
-    height: 50px;
-    position: absolute;
-    bottom: 0;
-    left: 0;
-}
-
-#tabBar ul {
-    height: 100%;
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-
-#tabBar ul li {
-    width: 20%;
-    height: 100%;
-    float: left;
+    -webkit-perspective: 1000;
 }
 
 .threadContainer {
     float: left;
     height: 100%;
     width: 240px;
-    -webkit-border-radius: 2px;
-    border-radius: 2px;
+    -webkit-transform-style: preserve-3d;
+    -webkit-transition: 0.8s;
+}
+
+.threadContainer.flipped {
+    -webkit-transform: rotateY(180deg);
+}
+
+.threadContainer .thread {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    -webkit-backface-visibility: hidden;
+    z-index: 2;
+}
+
+.threadFront {
+    position: absolute;
+    z-index: 1;
+}
+
+.threadBack {
+    -webkit-transform: rotateY(-180deg);
 }
 
 .threadPhoto {
@@ -69,32 +74,63 @@ body {
     height: 40px;
     -webkit-border-radius: 0 0 2px 2px;
     border-radius: 0 0 2px 2px;
-    background-color: #dadada;
+    background-color: #ffffff;
 }
 
 .threadInfo .moreButton {
     height: 92%;
-    float : right;
+    float: right;
     margin-right: 6px;
-    margin-top : 2px;
+    margin-top: 2px;
+}
+
+#tabBar {
+    width: 100%;
+    height: 50px;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    background-color: #cfccdb;
+}
+
+#tabBar ul {
+    height: 100%;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+#tabBar ul li {
+    width: 20%;
+    height: 100%;
+    float: left;
+}
+
+#tabBar ul li img {
+    width: 98%;
+    height: 78%;
+    margin-top: 8px;
 }
 
 #feedButton {
-    background-color: #81F781;
+    border-right: 1px solid #C3C1CC;
+    margin-right: -1px;
 }
 
 #friendsButton {
-    background-color: #0080FF;
+    border-right: 1px solid #C3C1CC;
+    margin-right: -1px;
 }
 
 #composeButton {
-    background-color: #FA58D0;
+    border-right: 1px solid #C3C1CC;
+    margin-right: -1px;
 }
 
 #notificationButton {
-    background-color: #faf964;
+    border-right: 1px solid #C3C1CC;
+    margin-right: -1px;
 }
 
 #moreButton {
-    background-color: #fa4049;
 }
