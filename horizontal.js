@@ -182,6 +182,7 @@ var Flicking = {
     },
     deleteCard: function (element) {
         _this = this;
+        var tempNode = element.cloneNode(false);
         var duplicateNode = element.cloneNode(true);
         this.initThread(duplicateNode);
 
@@ -189,7 +190,6 @@ var Flicking = {
         var tr = st.getPropertyValue("-webkit-transform")
 
         if (tr == 'none') {
-            console.log('null tr')
             element.style.webkitTransform = 'translateY(-900px) rotateY(180deg)';
         } else {
             /* finding angle (maybe for future use)
@@ -211,6 +211,10 @@ var Flicking = {
             */
             element.style.webkitTransform = 'translateY(-900px)';            
         }
+
+        element.style.marginRight = '0px'
+        element.style.width = '0px';
+
         function removeCard() {
             _this.container.removeChild(element);
             _this.container.appendChild(duplicateNode);
