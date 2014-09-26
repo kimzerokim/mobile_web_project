@@ -3,6 +3,7 @@ body {
     margin: 0;
     background: -webkit-linear-gradient(#605784, #BBAFAF);
     background: linear-gradient(#605784, #BBAFAF);
+    overflow: hidden;
 }
 
 #header {

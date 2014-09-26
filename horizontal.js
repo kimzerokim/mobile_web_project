@@ -181,11 +181,42 @@ var Flicking = {
         }
     },
     deleteCard: function (element) {
+        _this = this;
         var duplicateNode = element.cloneNode(true);
         this.initThread(duplicateNode);
 
-        this.container.removeChild(element);
-        this.container.appendChild(duplicateNode);
+        var st = window.getComputedStyle(element, null);
+        var tr = st.getPropertyValue("-webkit-transform")
+
+        if (tr == 'none') {
+            console.log('null tr')
+            element.style.webkitTransform = 'translateY(-900px) rotateY(180deg)';
+        } else {
+            /* finding angle (maybe for future use)
+            var values = tr.split('(')[1];
+            values = values.split(')')[0];
+            values = values.split(',');
+            var a = values[0];
+            var b = values[1];
+            var c = values[2];
+            var d = values[3];
+
+            var scale = Math.sqrt(a*a + b*b);
+
+            // arc sin, convert from radians to degrees, round
+            // DO NOT USE: see update below
+            var sin = b/scale;
+            var angle = Math.round(Math.atan2(b, a) * (180/Math.PI));
+            console.log('angle : ' + angle)
+            */
+            element.style.webkitTransform = 'translateY(-900px)';            
+        }
+        function removeCard() {
+            _this.container.removeChild(element);
+            _this.container.appendChild(duplicateNode);
+        }
+
+        element.addEventListener('transitionend', removeCard, false);
     },
     initThread: function(node) {
         var moreButton_front = node.childNodes[1].childNodes[3].childNodes[1],
